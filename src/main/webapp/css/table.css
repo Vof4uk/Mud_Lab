@@ -1,0 +1,29 @@
+.before-table {
+
+}
+
+table{
+    margin-top: 50px;
+    width: 100%;
+    /*background: #feff78;*/
+}
+
+th{
+    background: #953212;
+}
+
+table, td, th, tr{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.samples-body-row:nth-child(2n){
+    background-color: #fff3b4;
+}
+.samples-body-row:nth-child(2n-1){
+    background-color: #fcffb7;
+}
+
+.td-no-borders{
+    border: none;
+}
