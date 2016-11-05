@@ -18,21 +18,11 @@ public class Description {
         public Vendor(String name) {
             super(name);
         }
-
-        @Override
-        public String toString() {
-            return getName();
-        }
     }
 
     public static class ProductType extends NamedEntity{
         public ProductType(String name) {
             super(name);
-        }
-
-        @Override
-        public String toString() {
-            return getName();
         }
     }
 
@@ -40,21 +30,11 @@ public class Description {
         public ProductComponent(String name) {
             super(name);
         }
-
-        @Override
-        public String toString() {
-            return getName();
-        }
     }
 
     public static class Manufacturer extends NamedEntity{
         public Manufacturer(String name) {
             super(name);
-        }
-
-        @Override
-        public String toString() {
-            return getName();
         }
     }
 

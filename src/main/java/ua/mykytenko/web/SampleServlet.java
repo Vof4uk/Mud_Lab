@@ -54,7 +54,7 @@ public class SampleServlet extends HttpServlet {
 
         if(action ==  null){
             req.setAttribute("sampleList", controller.getAll());
-            req.getRequestDispatcher("/samples.jsp").forward(req, resp);
+            req.getRequestDispatcher("samples.jsp").forward(req, resp);
         }
         else if("delete".equals(action)){
             controller.delete(getId(req));
@@ -79,6 +79,10 @@ public class SampleServlet extends HttpServlet {
             req.setAttribute("sample", controller.get(id));
             req.getRequestDispatcher("tests?action=show&id=" + id).forward(req, resp);
         }
+        else if("showFamilies".equals(action)){
+            req.setAttribute("families", familyController.getAll());
+            req.getRequestDispatcher("families.jsp").forward(req, resp);
+        }
     }
 
     @Override
@@ -94,13 +98,13 @@ public class SampleServlet extends HttpServlet {
                     LocalDate.parse(req.getParameter("arrived")), Applications.parse(req.getParameter("applications")),
                     Components.parse(req.getParameter("composition")), new Vendor(req.getParameter("vendor")),
                     new Manufacturer(req.getParameter("manufacturer")), "");
-            if (req.getParameter("id").isEmpty()) {
+            if (req.getParameter("id") == null) {
                 controller.save(sample);
             } else {
                 sample.setId(Integer.valueOf(req.getParameter("id")));
                 controller.update(sample);
             }
-                resp.sendRedirect("samples.jsp");
+                resp.sendRedirect("samples");
         }
         else if("saveFamily".equals(action))
         {
@@ -114,7 +118,7 @@ public class SampleServlet extends HttpServlet {
                 family.setId(Integer.valueOf(req.getParameter("id")));
                 familyController.createFamily(family);
             }
-            resp.sendRedirect("families");
+            resp.sendRedirect("samples");
         }
 
     }

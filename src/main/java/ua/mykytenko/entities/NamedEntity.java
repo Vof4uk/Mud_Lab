@@ -4,20 +4,27 @@ package ua.mykytenko.entities;
  * Created by Микитенко on 19.10.2016.
  */
 public abstract class NamedEntity extends BaseEntity {
-    private String name;
+
+    private static final String NAME = "name";
 
     public NamedEntity() {
+        super();
     }
 
     public NamedEntity(String name) {
-        this.name = name;
+        setName(name);
     }
 
     public String getName() {
-        return name;
+        return stringGetter(NAME);
     }
 
     public void setName(String name) {
-        this.name = name;
+        genericSetter(NAME, name, String.class);
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

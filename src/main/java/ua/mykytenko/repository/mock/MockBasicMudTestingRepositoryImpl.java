@@ -32,8 +32,13 @@ public class MockBasicMudTestingRepositoryImpl implements TestingRepository<Basi
         Map<Integer, Integer> rheo2 = new HashMap<>();
         rheo2.put(600, 33);rheo2.put(300, 21);rheo2.put(200, 12);rheo2.put(100, 10);rheo2.put(6, 3);rheo2.put(3, 2);
 
-        save(new BasicMudTesting(0.5f, 1.03f, 24, 10.1f, 8.9f, rheo1, gels2));
-        save(new BasicMudTesting(2f, 1.03f, 16, 15f, 7.2f, rheo2, gels1));
+        BasicMudTesting testing1 = new BasicMudTesting(0.5f, 1.03f, 24, 10.1f, 8.9f, rheo1, gels2);
+        BasicMudTesting testing2 = new BasicMudTesting(2f, 1.03f, 16, 15f, 7.2f, rheo2, gels1);
+        testing1.setSampleId(1);
+        testing2.setSampleId(2);
+
+        save(testing1);
+        save(testing2);
     }
 
     @Override

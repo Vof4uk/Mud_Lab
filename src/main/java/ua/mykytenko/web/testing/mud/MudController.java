@@ -15,7 +15,7 @@ import java.util.List;
 public class MudController implements TestingController<BasicMudTesting>{
 
     @Autowired
-private TestingService<BasicMudTesting> service;
+    private TestingService<BasicMudTesting> service;
 
     public BasicMudTesting get(int id){
         return service.get(id);
@@ -31,5 +31,10 @@ private TestingService<BasicMudTesting> service;
 
     public BasicMudTesting save(BasicMudTesting testing){
         return service.save(testing);
+    }
+
+    @Override
+    public List<BasicMudTesting> getAllBySampleId(int sampleId) {
+        return service.getAllBySampleId(sampleId);
     }
 }

@@ -37,5 +37,8 @@ public class PowdersController implements TestingController<BasicPowderTesting> 
         return service.save(testing);
     }
 
-
+    @Override
+    public List<BasicPowderTesting> getAllBySampleId(int sampleId) {
+        return service.getAllBySampleId(sampleId);
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ua.mykytenko.entities.samples.Sample;
+import ua.mykytenko.to.TestingTo;
 import ua.mykytenko.web.testing.TestingController;
 import ua.mykytenko.web.testing.mud.MudController;
 import ua.mykytenko.web.testing.powder.PowdersController;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,12 +34,15 @@ public class TestingServlet extends HttpServlet {
 
     private List<TestingController> controllers = new ArrayList<>();
 
+    private Map<String, List<String>> parametersOrder;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         controllers.add(springContext.getBean(PowdersController.class));
         controllers.add(springContext.getBean(MudController.class));
+
     }
 
     @Override
@@ -52,8 +57,12 @@ public class TestingServlet extends HttpServlet {
 
         if("show".equals(action)){
             Sample s = (Sample) req.getAttribute("sample");
-            List<Map<String, String>> parameterMapsList = controllers.stream().map(controller -> controller.get(getId(req))
-                    .getParametersMap()).collect(Collectors.toList());
+            //TODO create ordrlist
+            List<TestingTo> parameterMapsList = controllers.stream()
+                    .map(controller -> controller.getAllBySampleId(getId(req)))
+                    .collect(ArrayList<String>::new, ArrayList::addAll, (l, p) -> {})
+                    .stream()
+                    .map();
             req.setAttribute("parameterMapsList", parameterMapsList);
             req.getRequestDispatcher("sampleWithTests.jsp").forward(req, resp);
         }

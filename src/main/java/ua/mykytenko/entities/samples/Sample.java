@@ -4,6 +4,7 @@ package ua.mykytenko.entities.samples;
 import ua.mykytenko.entities.NamedEntity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static ua.mykytenko.entities.samples.Description.*;
 
@@ -12,108 +13,120 @@ import static ua.mykytenko.entities.samples.Description.*;
  */
 public class Sample extends NamedEntity {
 
-    private Integer familyId;
+    private static final String FAMILY_ID = "Family ID";
 
-    private String familyName;
+    private static final String FAMILY_NAME = "Family name";
 
-    private float weight;
+    private static final String WEIGHT = "Weight";
 
-    private LocalDate arrived;
+    private static final String ARRIVED = "Date of arrival";
 
-    private Applications applications;
+    private static final String APPLICATIONS = "Applications";
 
-    private Components composition;
+    private static final String COMPOSITION = "Composition";
 
-    private Vendor vendor;
+    private static final String VENDOR = "Vendor";
 
-    private Manufacturer manufacturer;
+    private static final String MANUFACTURER = "Manufacturer";
 
-    private String notes;
+    private static final String NOTES = "Additional notes";
 
     public Sample(){}
 
     public Sample(String testingFamily, String name, float weight, LocalDate arrived, Applications applications
-            , Components composition, Vendor vendor, Manufacturer manufacturer, String notes) {
-        this.setName(name);
-        this.familyName = testingFamily;
-        this.weight = weight;
-        this.arrived = arrived;
-        this.applications = applications;
-        this.composition = composition;
-        this.vendor = vendor;
-        this.manufacturer = manufacturer;
-        this.notes = notes;
+            , Components components, Vendor vendor, Manufacturer manufacturer, String notes) {
+        setName(name);
+        setFamilyName(testingFamily);
+        setWeight(weight);
+        setArrived(arrived);
+        setApplications(applications);
+        setVendor(vendor);
+        setManufacturer(manufacturer);
+        setComposition(components);
+        setNotes(notes);
     }
 
     public Integer getFamilyId() {
-        return familyId;
+        return integerGetter(FAMILY_ID);
     }
 
     public void setFamilyId(Integer familyId) {
-        this.familyId = familyId;
+        genericSetter(FAMILY_ID, familyId, Integer.class);
     }
 
     public String getFamilyName() {
-        return familyName;
+        return stringGetter(FAMILY_NAME);
     }
 
-    public void setFamilyName(String testingFamily) {
-        this.familyName = testingFamily;
+    public void setFamilyName(String sampleFamily) {
+        genericSetter(FAMILY_NAME, sampleFamily, String.class);
     }
 
-    public float getWeight() {
-        return weight;
+    public Float getWeight() {
+        return floatGetter(WEIGHT);
     }
 
-    public void setWeight(float weight) {
-        this.weight = weight;
+    public void setWeight(Float weight) {
+        genericSetter(WEIGHT, weight, Float.class);
     }
 
     public LocalDate getArrived() {
-        return arrived;
+        return localDateGetter(ARRIVED);
     }
 
     public void setArrived(LocalDate arrived) {
-        this.arrived = arrived;
+        genericSetter(ARRIVED, arrived, LocalDate.class);
     }
 
     public Applications getApplications() {
-        return applications;
+        if(Objects.isNull(entityMap.get(APPLICATIONS))) return null;
+        return Applications.parse(entityMap.get(APPLICATIONS));
     }
 
     public void setApplications(Applications applications) {
-        this.applications = applications;
+        if(Objects.isNull(applications)) entityMap.put(APPLICATIONS, null);
+        else
+        entityMap.put(APPLICATIONS, applications.toString());
     }
 
     public Components getComposition() {
-        return composition;
+        if(Objects.isNull(entityMap.get(COMPOSITION))) return null;
+        return Components.parse(entityMap.get(COMPOSITION));
     }
 
     public void setComposition(Components composition) {
-        this.composition = composition;
+        if(Objects.isNull(composition)) entityMap.put(COMPOSITION, null);
+        else
+        entityMap.put(COMPOSITION, composition.toString());
     }
 
     public Vendor getVendor() {
-        return vendor;
+        if(Objects.isNull(entityMap.get(MANUFACTURER))) return null;
+        return new Vendor(entityMap.get(VENDOR));
     }
 
     public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
+        if(Objects.isNull(vendor)) entityMap.put(VENDOR, null);
+        else
+        entityMap.put(VENDOR, vendor.toString());
     }
 
     public Manufacturer getManufacturer() {
-        return manufacturer;
+        if(Objects.isNull(entityMap.get(MANUFACTURER))) return null;
+        return new Manufacturer(entityMap.get(MANUFACTURER));
     }
 
     public void setManufacturer(Manufacturer manufacturer) {
-        this.manufacturer = manufacturer;
+        if(Objects.isNull(manufacturer)) entityMap.put(MANUFACTURER, null);
+        else
+        entityMap.put(MANUFACTURER, manufacturer.toString());
     }
 
     public String getNotes() {
-        return notes;
+        return stringGetter(NOTES);
     }
 
     public void setNotes(String notes) {
-        this.notes = notes;
+        genericSetter(NOTES, notes, String.class);
     }
 }

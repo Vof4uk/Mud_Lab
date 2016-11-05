@@ -16,9 +16,9 @@
 
         </div>
         <div class="samples">
-            <form action="samples" method="post">
+            <form action="samples?action=saveSample" method="post">
                 <jsp:useBean id="sample" type="ua.mykytenko.entities.samples.Sample" scope="request"/>
-                <input name="id" value="${sample.id}" type="hidden">
+                    <input name="id" value="${sample.id}" type="hidden">
                 <dl class="samples">
                     <dd>Назва</dd>
                     <dt><input name="name" value="${sample.name}" type="text"></dt>
@@ -38,11 +38,11 @@
                     <dd>Дата прибуття</dd>
                     <dt><input name="arrived" value="${sample.arrived}" type="date"></dt>
 
-                    <dd>Виробник</dd>
-                    <dt><input name="manufacturer" value="${sample.manufacturer}" type="text"></dt>
-
                     <dd>Дистрибютор</dd>
                     <dt><input name="vendor" value="${sample.vendor}" type="text"></dt>
+
+                    <dd>Виробник</dd>
+                    <dt><input name="manufacturer" value="${sample.manufacturer}" type="text"></dt>
 
                     <dd>Призначення</dd>
                     <dt><input class="big-input" name="applications" value="${sample.applications}" type="text"></dt>

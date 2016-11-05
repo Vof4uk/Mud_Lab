@@ -51,6 +51,26 @@
                 </tr>
             </table>
 
+            <div>
+                <c:forEach items="${parameterMapsList}" var="map">
+                    <h2>kjbhjb</h2>
+                    <jsp:useBean id="map" class="java.util.HashMap" />
+                    <table>
+                        <tr>
+                            <c:forEach items="${map.keySet()}" var="key">
+                                <th>${key}</th>
+                            </c:forEach>
+                        </tr>
+                        <tr>
+                            <c:forEach items="${map.values()}" var="value">
+                                <td>${value}</td>
+                            </c:forEach>
+                        </tr>
+                    </table>
+
+                </c:forEach>
+            </div>
+
 
         </div>
     </div>
