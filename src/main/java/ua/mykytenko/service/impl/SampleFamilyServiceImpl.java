@@ -1,9 +1,10 @@
-package ua.mykytenko.service;
+package ua.mykytenko.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.mykytenko.entities.samples.SampleFamily;
 import ua.mykytenko.repository.SampleFamilyRepository;
+import ua.mykytenko.service.SampleFamilyService;
 
 import java.util.List;
 

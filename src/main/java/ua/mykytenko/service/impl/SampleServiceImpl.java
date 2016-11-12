@@ -1,9 +1,10 @@
-package ua.mykytenko.service;
+package ua.mykytenko.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.mykytenko.entities.samples.Sample;
 import ua.mykytenko.repository.SampleRepository;
+import ua.mykytenko.service.SamplesService;
 import ua.mykytenko.util.exceptions.MyIllegalStateException;
 import ua.mykytenko.util.exceptions.NotFoundExceprion;
 

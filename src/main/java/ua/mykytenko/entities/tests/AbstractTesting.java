@@ -3,7 +3,6 @@ package ua.mykytenko.entities.tests;
 import ua.mykytenko.entities.BaseEntity;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Микитенко on 19.10.2016.

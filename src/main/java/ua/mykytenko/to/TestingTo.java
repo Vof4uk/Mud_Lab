@@ -8,12 +8,30 @@ import java.util.*;
  * Created by Микитенко on 04.11.2016.
  */
 public class TestingTo {
+    private static Map<String, String> translation = new HashMap<>();
     private Map<String, String> core;
-    private static Map<String, String> translation;
     private List<String> order;
 
-    public TestingTo(AbstractTesting testing){
+    private String entityName;
+
+    public TestingTo() {
+    }
+
+    public TestingTo(AbstractTesting testing) {
         core = Collections.unmodifiableMap(testing.getParametersMap());
+        entityName = testing.getEntityName();
+    }
+
+    public static void setTranslation(Map<String, String> translation1) {
+        translation = translation1;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
     }
 
     public Map<String, String> getCore() {
@@ -32,23 +50,30 @@ public class TestingTo {
         this.order = order;
     }
 
-    public static void setTranslation(Map<String, String> translation1){
-        translation = translation1;
-    }
-
-    public Map<String, String> getParametersMapTranslated(){
+    public Map<String, String> getParametersMapTranslated() {
+        if (order == null || core == null) return Collections.emptyMap();
         return order.stream()
                 .collect(LinkedHashMap::new
                         , (map, name) ->
-                                map.put(translation.get(name) == null? name : translation.get(name) , core.get(name))
-                        , (m, n) -> {});
+                                map.put(translation.get(name) == null ? name : translation.get(name), core.get(name))
+                        , (m, n) -> {
+                        });
     }
 
-    public Map<String, String> getParametersMap(){
+    public Map<String, String> getParametersMap() {
+        if (order == null || core == null) return Collections.emptyMap();
         return order.stream()
                 .collect(LinkedHashMap::new,
                         (map, name) -> map.put(name, core.get(name)),
-                                (m, n) -> {});
+                        (m, n) -> {
+                        });
     }
 
+    public Set<String> keySet(){
+        return getParametersMapTranslated().keySet();
+    }
+
+    public Collection<String> values(){
+        return getParametersMap().values();
+    }
 }

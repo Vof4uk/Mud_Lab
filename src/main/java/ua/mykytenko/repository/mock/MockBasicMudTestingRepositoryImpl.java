@@ -1,10 +1,10 @@
 package ua.mykytenko.repository.mock;
 
 import org.springframework.stereotype.Repository;
-import ua.mykytenko.entities.tests.powders.BasicPowderTesting;
 import ua.mykytenko.entities.tests.solutions.BasicMudTesting;
 import ua.mykytenko.repository.TestingRepository;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 public class MockBasicMudTestingRepositoryImpl implements TestingRepository<BasicMudTesting>{
 
     private Map<Integer, BasicMudTesting> tests = new ConcurrentHashMap<>();
-    AtomicInteger id = new AtomicInteger(0);
+    private AtomicInteger id = new AtomicInteger(0);
+    private Map<String, List<String>> paramLists = new ConcurrentHashMap<>();
 
     {
         Map<Integer, Integer> gels1 = new HashMap<>();
@@ -39,6 +40,11 @@ public class MockBasicMudTestingRepositoryImpl implements TestingRepository<Basi
 
         save(testing1);
         save(testing2);
+
+
+        setParametersList("BasicMudTesting", Arrays.asList("Mud weight", "Viscosity", "Fluid loss"));
+
+//        paramLists.put()
     }
 
     @Override
@@ -71,6 +77,18 @@ public class MockBasicMudTestingRepositoryImpl implements TestingRepository<Basi
 
     @Override
     public List<BasicMudTesting> getAllBySampleId(int sampleId) {
-        return tests.values().stream().filter(t -> t.getSampleId() == sampleId).collect(Collectors.toList());
+        return tests.values().stream()
+                .filter(t -> t != null && t.getSampleId() == sampleId)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean setParametersList(String name, List<String> paramList) {
+        return paramLists.put(name, paramList) != null;
+    }
+
+    @Override
+    public List<String> getParametersList(String name) {
+        return paramLists.get(name);
     }
 }

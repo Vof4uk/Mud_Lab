@@ -13,4 +13,7 @@ public interface TestingRepository<T extends AbstractTesting> {
     List<T> getAll();
     T save(T test);
     List<T> getAllBySampleId(int sampleId);
+    boolean setParametersList(String name, List<String> paramList);
+    List<String> getParametersList(String name);
+
 }

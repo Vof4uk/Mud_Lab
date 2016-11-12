@@ -1,7 +1,5 @@
 package ua.mykytenko.entities.tests.powders;
 
-import ua.mykytenko.entities.tests.powders.BasicPowderTesting;
-
 import java.util.Map;
 
 /**

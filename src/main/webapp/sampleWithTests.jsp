@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="header.jsp"/>
+<jsp:include page="jspSnippets/header.jsp"/>
 
 <main class="main">
     <div class="container cf">
@@ -52,17 +52,17 @@
             </table>
 
             <div>
-                <c:forEach items="${parameterMapsList}" var="map">
-                    <h2>kjbhjb</h2>
-                    <jsp:useBean id="map" class="java.util.HashMap" />
-                    <table>
-                        <tr>
-                            <c:forEach items="${map.keySet()}" var="key">
+                <c:forEach items="${toList}" var="to">
+                    <jsp:useBean id="to" class="ua.mykytenko.to.TestingTo" />
+                    <h2>${to.entityName}</h2>
+                    <table class="samples">
+                        <tr class="samples-header-row">
+                            <c:forEach items="${to.keySet()}" var="key">
                                 <th>${key}</th>
                             </c:forEach>
                         </tr>
-                        <tr>
-                            <c:forEach items="${map.values()}" var="value">
+                        <tr class="samples-body-row">
+                            <c:forEach items="${to.values()}" var="value">
                                 <td>${value}</td>
                             </c:forEach>
                         </tr>
@@ -76,6 +76,6 @@
     </div>
 </main>
 
-<jsp:include page="footer.jsp"/>
+<jsp:include page="jspSnippets/footer.jsp"/>
 
 

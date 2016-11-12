@@ -1,7 +1,6 @@
 package ua.mykytenko.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +13,13 @@ public abstract class BaseEntity {
 
     private static final String ID = "id";
 
-    private final String ENTITY_NAME = this.getClass().getSimpleName();
+    private static final String ENTITY_NAME = "entity name";
 
     protected Map<String, String> entityMap = new HashMap<>();
+
+    {
+       setEntityName(this.getClass().getSimpleName());
+    }
 
     public boolean isNew() {
         return getId() == null;

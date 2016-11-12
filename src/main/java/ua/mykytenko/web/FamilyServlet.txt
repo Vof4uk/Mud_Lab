@@ -2,12 +2,8 @@ package ua.mykytenko.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ua.mykytenko.entities.samples.SampleFamily;
-import ua.mykytenko.web.sample.SampleFamilyController;
+import ua.mykytenko.web.controllers.sample.SampleFamilyController;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
