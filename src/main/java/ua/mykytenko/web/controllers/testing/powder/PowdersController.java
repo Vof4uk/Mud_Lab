@@ -41,7 +41,7 @@ public class PowdersController extends AbstractController implements TestingCont
     @Override
     public TestingTo save(BasicPowderTesting testing, int userId) {
         checkUserForAccess(userId, UserRole.LAB_CHIEF, UserRole.LAB_ASSIST);
-        return service.save(testing);
+        return service.saveNew(testing);
     }
 
     @Override

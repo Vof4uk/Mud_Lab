@@ -8,15 +8,8 @@ import java.util.List;
 /**
  * Created by Микитенко on 20.10.2016.
  */
-public interface TestingService<T extends AbstractTesting> {
-    TestingTo get(int id);
-    boolean delete(int id);
-    List<TestingTo> getAll();
-    TestingTo save(T test);
+public interface TestingService<T extends AbstractTesting> extends BasicCrudService<TestingTo, T>{
     List<TestingTo> getAllBySampleId(int sampleId);
-    boolean setParamOrder(String name, List<String> orderList);
+    void setParamOrder(String name, List<String> orderList);
     List<String> getParamOrder(String name);
-
-
-
 }

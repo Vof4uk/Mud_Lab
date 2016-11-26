@@ -37,7 +37,6 @@ public class SampleServlet extends HttpServlet {
         springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
         familyController = springContext.getBean(SampleFamilyController.class);
         controller = springContext.getBean(SampleController.class);
-
     }
 
     @Override
@@ -97,7 +96,6 @@ public class SampleServlet extends HttpServlet {
         String action = req.getParameter("action");
         Integer userId = req.getSession().getAttribute("userId") == null ? 0 : (Integer)req.getSession().getAttribute("userId");
 
-
         if("saveSample".equals(action))
         {
             final Sample sample = new Sample(
@@ -121,15 +119,13 @@ public class SampleServlet extends HttpServlet {
             SampleFamily family = new SampleFamily(name, initId);
 
             if (req.getParameter("id").isEmpty()) {
-                familyController.createFamily(family, userId);
+                familyController.create(family, userId);
             } else {
                 family.setId(Integer.valueOf(req.getParameter("id")));
-                familyController.createFamily(family, userId);
+                familyController.create(family, userId);
             }
             resp.sendRedirect("samples");
         }
-
     }
-
 }
 

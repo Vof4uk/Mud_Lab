@@ -76,4 +76,10 @@ public class TestingTo {
     public Collection<String> values(){
         return getParametersMap().values();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(! (obj instanceof TestingTo)) return false;
+        return this.core.equals(((TestingTo)obj).getCore());
+    }
 }

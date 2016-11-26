@@ -24,13 +24,18 @@ public class SampleFamilyController extends AbstractController{
         return service.getAll();
     }
 
-    public SampleFamily createFamily(SampleFamily family, int userId){
+    public SampleFamily create(SampleFamily family, int userId){
         checkUserForAccess(userId, UserRole.LAB_CHIEF);
-        return service.create(family);
+        return service.saveNew(family);
     }
 
     public SampleFamily get(int id, int userId){
         checkUserForAccess(userId, UserRole.LAB_CHIEF, UserRole.LAB_ASSIST, UserRole.BOSS );
         return service.get(id);
+    }
+
+    public void delete(int id, int userId){
+        checkUserForAccess(userId, UserRole.LAB_CHIEF);
+        service.delete(id);
     }
 }

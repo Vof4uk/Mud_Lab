@@ -4,19 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--<import resource="spring-tools.xml"/>-->
+    <import resource="spring/spring-app.xml"/>
 
-    <!--<bean class="ua.mykytenko.util.SpringApplicationContext" />-->
-
-    <context:annotation-config/>
-
-    <context:component-scan base-package="ua.mykytenko.**.repository.mock"/>
-
-    <context:component-scan base-package="ua.mykytenko.**.service"/>
-
-    <context:component-scan base-package="ua.mykytenko.**.web"/>
-
-
-
+    <context:component-scan base-package="ua.mykytenko.**.serviceTest"/>
 
 </beans>

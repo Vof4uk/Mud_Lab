@@ -37,7 +37,7 @@ public class MudController extends AbstractController implements TestingControll
 
     public TestingTo save(BasicMudTesting testing, int userId){
         checkUserForAccess(userId, UserRole.LAB_CHIEF, UserRole.LAB_ASSIST);
-        return service.save(testing);
+        return service.saveNew(testing);
     }
 
     @Override

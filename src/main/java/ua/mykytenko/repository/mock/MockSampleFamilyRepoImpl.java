@@ -17,13 +17,13 @@ import java.util.stream.Collectors;
 @Repository("familyRepo")
 public class MockSampleFamilyRepoImpl implements SampleFamilyRepository {
 
-    private final Map<SampleFamily, AtomicInteger> inFamilyIdCounters = new ConcurrentHashMap<>();
+    private final Map<Integer, AtomicInteger> inFamilyIdCounters = new ConcurrentHashMap<>();
     private final Map<Integer, SampleFamily> families = new ConcurrentHashMap<>();
     private final AtomicInteger id = new AtomicInteger(0);
     {
-        create("polymers", 5000);
-        create("ligno", 8000);
-        create("other", 2000);
+        save(new SampleFamily("polymers", 5000));
+        save(new SampleFamily("ligno", 8000));
+        save(new SampleFamily("other", 2000));
     }
 
     public MockSampleFamilyRepoImpl() {
@@ -31,14 +31,20 @@ public class MockSampleFamilyRepoImpl implements SampleFamilyRepository {
 
     @Override
     public List<SampleFamily> getAll() {
-        return inFamilyIdCounters.keySet().stream().collect(Collectors.toList());
+        return families.values().stream().collect(Collectors.toList());
     }
 
     @Override
-    public SampleFamily create(String familyName, int initialId) {
-        SampleFamily family = new SampleFamily(familyName, initialId);
-        inFamilyIdCounters.put(family, new AtomicInteger(initialId));
-        families.put(id.incrementAndGet(), family);
+    public SampleFamily save(SampleFamily family) {
+        if(family.isNew()){
+            family.setId(id.incrementAndGet());
+            inFamilyIdCounters.put(family.getId(), new AtomicInteger(family.getInitialId()));
+            families.put(family.getId(), family);
+        }
+        else{
+            if(!families.containsKey(family.getId())) return null;
+            families.put(family.getId(), family);
+        }
         return family;
     }
 
@@ -50,7 +56,7 @@ public class MockSampleFamilyRepoImpl implements SampleFamilyRepository {
     @Override
     public Integer pullId(String familyName) {
         AtomicInteger id = getFamilyAtomicIdByName(familyName);
-        if(Objects.nonNull(id)) return id.incrementAndGet();
+        if(Objects.nonNull(id)) return id.getAndIncrement();
         return null;
     }
 
@@ -62,16 +68,14 @@ public class MockSampleFamilyRepoImpl implements SampleFamilyRepository {
     }
 
     private AtomicInteger getFamilyAtomicIdByName(String familyName){
-        for (Map.Entry<SampleFamily, AtomicInteger> entry: inFamilyIdCounters.entrySet()){
-            if(entry.getKey().getName().equals(familyName)) return entry.getValue();
+        for (Map.Entry<Integer, SampleFamily> entry: families.entrySet()){
+            if(entry.getValue().getName().equals(familyName)) return inFamilyIdCounters.get(entry.getValue().getId());
         }
         return null;
     }
 
     @Override
     public boolean delete(int id) {
-        SampleFamily family = families.get(id);
-        families.remove(id);
-        return inFamilyIdCounters.remove(family) != null;
+        return inFamilyIdCounters.remove(id) != null && families.remove(id) != null;
     }
 }

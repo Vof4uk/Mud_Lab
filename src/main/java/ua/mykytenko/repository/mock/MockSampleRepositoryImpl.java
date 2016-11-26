@@ -29,15 +29,13 @@ public class MockSampleRepositoryImpl implements SampleRepository{
     @Autowired
     public MockSampleRepositoryImpl(SampleFamilyRepository familyRepo) {
         this.familyRepo = familyRepo;
+        initiate();
     }
 
-    private static final AtomicInteger id = new AtomicInteger(1);
+    private final AtomicInteger id = new AtomicInteger(1);
     private final Map<Integer, Sample> dataBase = new ConcurrentHashMap<>();
-    private boolean initiated = false;
 
     private void initiate(){
-//        familyRepo = ServletUtil.getSpringContext().getBean(MockSampleFamilyRepoImpl.class);
-
         Applications application1 = Applications.parse("viscosifier");
         Applications application2 = Applications.parse("thinner; defloc");
         Components composition1 = Components.parse("100% - xanthan gum");
@@ -50,13 +48,9 @@ public class MockSampleRepositoryImpl implements SampleRepository{
         save(s1);
         save(s2);
     }
+
     @Override
     public List<Sample> getAll() {
-        if(!initiated){
-            initiate();
-            initiated = true;
-        }
-
         List<Sample> list = new ArrayList<>();
         Collections.addAll(list, dataBase.values().toArray(new Sample[1]));
         return list;
@@ -64,12 +58,13 @@ public class MockSampleRepositoryImpl implements SampleRepository{
 
     @Override
     public Sample save(Sample sample) {
-        Integer curId;
         if (sample.isNew()) {
-            curId = generateId();
-            sample.setId(curId);
-        }
-        sample.setFamilyId(familyRepo.peakId(sample.getFamilyName()));
+            sample.setId(generateId());
+            sample.setFamilyId(familyRepo.pullId(sample.getFamilyName()));
+        }else if(!dataBase.containsKey(sample.getId()))
+            return null;
+//        else
+//            sample.setFamilyId(familyRepo.peakId(sample.getFamilyName()));
         dataBase.put(sample.getId(), sample);
         return sample;
     }
@@ -81,7 +76,7 @@ public class MockSampleRepositoryImpl implements SampleRepository{
 
     @Override
     public Sample get(int sampleId) {
-            return dataBase.get(sampleId);
+        return dataBase.get(sampleId);
     }
 
     private int generateId(){

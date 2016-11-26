@@ -11,6 +11,10 @@ import java.util.Objects;
  */
 public abstract class BaseEntity {
 
+    private String string;
+
+    private boolean validString;
+
     private static final String ID = "id";
 
     private static final String ENTITY_NAME = "entity name";
@@ -48,19 +52,19 @@ public abstract class BaseEntity {
     protected  Integer integerGetter(String key){
         if(Objects.isNull(entityMap.get(key)))
             return null;
-        return Integer.valueOf(entityMap.get(ID));
+        return Integer.valueOf(entityMap.get(key));
     }
 
     protected  Float floatGetter(String key){
         if(Objects.isNull(entityMap.get(key)))
             return null;
-        return Float.valueOf(entityMap.get(ID));
+        return Float.valueOf(entityMap.get(key));
     }
 
     protected  Boolean booleanGetter(String key){
         if(Objects.isNull(entityMap.get(key)))
             return null;
-        return Boolean.valueOf(entityMap.get(ID));
+        return Boolean.valueOf(entityMap.get(key));
     }
 
     protected String stringGetter(String key){
@@ -77,6 +81,30 @@ public abstract class BaseEntity {
         if(Objects.isNull(value)) entityMap.put(key, null);
         else
             entityMap.put(key, String.valueOf(value));
+        validString = false;
     }
 
+    @Override
+    public String toString() {
+        if(validString) return string;
+
+        StringBuilder sb = getEntityMap().entrySet().stream()
+                .collect(StringBuilder::new,
+                        (s, e) -> s.append(String.format("\n %s = %s", e.getKey(), e.getValue())),
+                        (x, y)->{});
+        this.string = sb.toString();
+        sb.setLength(0);
+        validString = true;
+        return this.string;
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return toString().equals(obj.toString());
+    }
 }

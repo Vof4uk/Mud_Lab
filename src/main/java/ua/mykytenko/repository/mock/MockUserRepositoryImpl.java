@@ -5,6 +5,7 @@ import ua.mykytenko.entities.user.User;
 import ua.mykytenko.entities.user.UserRole;
 import ua.mykytenko.repository.UserRepository;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -39,11 +40,17 @@ public class MockUserRepositoryImpl implements UserRepository{
     public User save(User user) {
         if(user.isNew()) user.setId(id.getAndIncrement());
         else if(!users.containsKey(user.getId())) return null;
-        return users.put(user.getId(), user);
+        users.put(user.getId(), user);
+        return user;
     }
 
     @Override
     public boolean delete(int id) {
         return users.remove(id) != null;
+    }
+
+    @Override
+    public Collection<User> getAll() {
+        return users.values();
     }
 }

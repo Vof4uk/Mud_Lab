@@ -12,7 +12,7 @@ public interface SampleFamilyRepository {
 
     SampleFamily get(int id);
 
-    SampleFamily create(String familyName, int initialId);
+    SampleFamily save(SampleFamily family);
 
     Integer pullId(String familyName);
 

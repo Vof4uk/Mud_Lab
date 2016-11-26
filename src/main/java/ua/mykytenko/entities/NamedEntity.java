@@ -22,9 +22,4 @@ public abstract class NamedEntity extends BaseEntity {
     public void setName(String name) {
         genericSetter(NAME, name, String.class);
     }
-
-    @Override
-    public String toString() {
-        return this.getName();
-    }
 }

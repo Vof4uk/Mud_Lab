@@ -1,7 +1,5 @@
 package ua.mykytenko.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletConfig;
@@ -14,12 +12,10 @@ import java.io.IOException;
 /**
  * Created by Микитенко on 19.10.2016.
  */
-@Configuration
 public class UserServlet extends HttpServlet {
 
     private final ClassPathXmlApplicationContext appContext;
 
-    @Autowired
     public UserServlet(ClassPathXmlApplicationContext appContext) {
         this.appContext = appContext;
     }

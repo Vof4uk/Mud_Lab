@@ -68,7 +68,7 @@ public class MockBasicMudTestingRepositoryImpl implements TestingRepository<Basi
             test.setId(id.incrementAndGet());
             tests.put( test.getId(), test);
         }
-
+        else if(!tests.containsKey(test.getId())) return  null;
         else{
             tests.put(test.getId(), test);
         }

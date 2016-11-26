@@ -23,7 +23,6 @@ public class MockBasicPowderTestingRepositoryImpl implements TestingRepository<B
     {
         BasicPowderTesting testing1 = new BasicPowderTesting(1500, 800, "some polymer", 5.6f, true);
         BasicPowderTesting testing2 = new BasicPowderTesting(1800, 450, "some sort of ligno", 8f, true);
-        //TODo  specify sampleId
         testing1.setSampleId(1);
         testing2.setSampleId(2);
         save(testing1);
@@ -36,6 +35,7 @@ public class MockBasicPowderTestingRepositoryImpl implements TestingRepository<B
             testing.setId(id.incrementAndGet());
             tests.put( testing.getId(), testing);
         }
+        else if(!tests.containsKey(testing.getId())) return null;
         else{
             tests.put(testing.getId(), testing);
         }
