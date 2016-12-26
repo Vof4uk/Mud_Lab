@@ -1,5 +1,8 @@
 package ua.mykytenko.serviceTest;
 
+import org.junit.Ignore;
+import org.springframework.test.context.ActiveProfiles;
+import ua.mykytenko.Profiles;
 import ua.mykytenko.entities.tests.solutions.BasicMudTesting;
 import ua.mykytenko.service.BasicMudTestingService;
 
@@ -8,9 +11,7 @@ import javax.annotation.PostConstruct;
 import static ua.mykytenko.BasicMudTestingData.*;
 
 
-/**
- * Created by Микитенко on 26.11.2016.
- */
+@Ignore
 public class BasicMudServiceTestingTest extends AbstractTestingServiceTest {
     {
         clazz = BasicMudTesting.class;

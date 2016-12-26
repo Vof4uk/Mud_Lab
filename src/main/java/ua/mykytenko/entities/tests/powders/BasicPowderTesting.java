@@ -2,11 +2,13 @@ package ua.mykytenko.entities.tests.powders;
 
 import ua.mykytenko.entities.tests.AbstractTesting;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Map;
 
-/**
- * Created by Микитенко on 19.10.2016.
- */
+@Entity
+@Table(name = "basic_powder_tests")
 public class BasicPowderTesting extends AbstractTesting {
 
     private static final String SPECIFIC_GRAVITY = "Specific gravity";
@@ -26,6 +28,7 @@ public class BasicPowderTesting extends AbstractTesting {
         setWaterSoluble(waterSoluble);
     }
 
+    @Column(name = "sg")
     public Integer getSg() {
         return integerGetter(SPECIFIC_GRAVITY);
     }
@@ -34,6 +37,7 @@ public class BasicPowderTesting extends AbstractTesting {
         genericSetter(SPECIFIC_GRAVITY, sg, Integer.class);
     }
 
+    @Column(name = "bulk_sg")
     public Integer getBulkSg() {
         return integerGetter(BULK_SPECIFIC_GRAVITY);
     }
@@ -42,6 +46,7 @@ public class BasicPowderTesting extends AbstractTesting {
         genericSetter(BULK_SPECIFIC_GRAVITY, packingSg, Integer.class);
     }
 
+    @Column(name = "appearence")
     public String getAppearance() {
         return stringGetter(DESCRIPTION);
     }
@@ -50,6 +55,7 @@ public class BasicPowderTesting extends AbstractTesting {
         genericSetter(DESCRIPTION, appearance, String.class);
     }
 
+    @Column(name = "wetness")
     public Float getWetness() {
         return floatGetter(WETNESS);
     }
@@ -58,6 +64,7 @@ public class BasicPowderTesting extends AbstractTesting {
         genericSetter(WETNESS, wetness, Float.class);
     }
 
+    @Column(name = "water_soluble")
     public Boolean getWaterSoluble() {
         return booleanGetter(IS_WATER_SOLUBLE);
     }
@@ -66,8 +73,4 @@ public class BasicPowderTesting extends AbstractTesting {
         genericSetter(IS_WATER_SOLUBLE, waterSoluble, Boolean.class);
     }
 
-    @Override
-    public Map<String, String> getParametersMap() {
-       return super.getParametersMap();
-    }
 }

@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
-/**
- * Created by Микитенко on 26.11.2016.
- */
 @Ignore
 public class AbstractTestingServiceTest extends AbstractCrudServiceTest {
 
@@ -22,7 +19,7 @@ public class AbstractTestingServiceTest extends AbstractCrudServiceTest {
 
     @Override
     public void testGet() {
-        assertEquals(transferObjects.get(0),service.get(1));
+        assertEquals(transferObjects.get(0),service.get(startSequence + 1));
     }
 
     @Override
@@ -48,14 +45,14 @@ public class AbstractTestingServiceTest extends AbstractCrudServiceTest {
     @Override
     public void testGetAll() {
         List<TestingTo> l = service.getAll();
-        assertEquals(service.getAll(), transferObjects);
+        assertEquals(transferObjects, service.getAll());
     }
 
     @Override
     public void testUpdate() {
-        newEntity.setId(1);
+        newEntity.setId(startSequence + 1);
         service.update(clazz.cast(newEntity));
-        assertEquals(new TestingTo((AbstractTesting)newEntity), service.get(1));
+        assertEquals(new TestingTo((AbstractTesting)compareEntity), service.get(startSequence + 1));
         service.update(entities.get(0));
     }
 

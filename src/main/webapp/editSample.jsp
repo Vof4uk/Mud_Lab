@@ -25,9 +25,9 @@
 
                     <dd>Testing Family</dd>
                     <dt>
-                        <select name="testingFamily" value="${sample.familyName}" type="text">
+                        <select name="testingFamily" value="${sample.family}" type="text">
                             <c:forEach items="${families}" var="family">
-                                <option value="${family}" ${sample.familyName == family ? 'selected' : ''}  >${family}</option>
+                                <option value="${family}" ${sample.family == family ? 'selected' : ''}  >${family}</option>
                             </c:forEach>
                         </select>
                     </dt>

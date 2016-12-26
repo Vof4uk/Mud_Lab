@@ -6,9 +6,6 @@ import ua.mykytenko.to.TestingTo;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Микитенко on 26.11.2016.
- */
 public class BasicPowderTestingData {
     public static final BasicPowderTesting TEST_1;
     public static final BasicPowderTesting TEST_2;
@@ -24,8 +21,8 @@ public class BasicPowderTestingData {
         TEST_1 = new BasicPowderTesting(1500, 800, "some polymer", 5.6f, true);
         TEST_2 = new BasicPowderTesting(1800, 450, "some sort of ligno", 8f, true);
         NEW_TEST = new BasicPowderTesting(4200, 1600, "barite", 8f, false);
-        TEST_1.setSampleId(1);
-        TEST_2.setSampleId(2);
+        TEST_1.setSampleId(200000);
+        TEST_2.setSampleId(200001);
         TESTS.add(TEST_1);
         TESTS.add(TEST_2);
 

@@ -2,20 +2,44 @@ package ua.mykytenko.entities.samples;
 
 import ua.mykytenko.entities.NamedEntity;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Stream;
 
-/**
- * Created by Микитенко on 19.10.2016.
- */
 public class Description {
 
     private Description(){}
 
-    public static class Vendor extends NamedEntity {
-        public Vendor(String name) {
+    @Entity
+    public static class Company extends NamedEntity {
+        public Company() {
+            super();
+        }
+
+        public Company(String line) {
+            super();
+            if(!line.contains("="))
+                setName(line);
+            else {
+                Map<String, String> map = parseLine(line);
+                if (map.get(ID) != null)
+                    setId(Integer.valueOf(map.get("id").trim()));
+                if (map.get(NAME) != null)
+                    setName(map.get("name"));
+            }
+        }
+
+        public Company(int id, String name){
             super(name);
+            this.setId(id);
+        }
+
+        public static Company parse(String line){
+            Map<String, String> map  = parseLine(line);
+            Company c = new Company(Integer.valueOf(map.get("id")), map.get("name"));
+            return c;
         }
     }
 
@@ -31,16 +55,14 @@ public class Description {
         }
     }
 
-    public static class Manufacturer extends NamedEntity{
-        public Manufacturer(String name) {
-            super(name);
-        }
-    }
-
     public static class Applications implements Set<String>{
         private Set<String> set = new HashSet<>();
 
-        private Applications(){}
+        public Applications(){}
+
+        public Applications(Set<String> set){
+            this.set = Collections.unmodifiableSet(set);
+         }
 
         public static Applications parse(String appl){
             Applications applications = new Applications();
@@ -163,14 +185,14 @@ public class Description {
         }
 
         public static Components parse(String comps){
-            Components c = Arrays.stream(comps.split("[,.;\n]+"))
-                    .filter(line -> line.trim().matches("[0-9]{1,3}% -? ?[\\w\\W]+"))
+
+            return Arrays.stream(comps.split("[.;\n]+"))
+                    .filter(line -> line.trim().matches("[0-9,]{1,6}% -? ?[\\w\\W]+"))
+                    .map(line -> line.replaceAll(",[0]*%", "%"))
                     .collect(Components::new,
-                            (m, line) -> m.put(line.replaceAll("[\\w\\W]*%[ -]*", "").trim(),
+                            (m, line) -> m.put(line.replaceAll("[\\w\\W,]*%[ -]*", "").trim(),
                                                Integer.valueOf(line.replaceAll("%[\\w\\W]*", "").trim())),
                             (m, u) -> {});
-
-            return c;
         }
 
         @Override

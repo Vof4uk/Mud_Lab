@@ -18,7 +18,8 @@
         <logback.version>1.1.7</logback.version>
         <slf4j.version>1.7.21</slf4j.version>
         <spring.version>4.3.3.RELEASE</spring.version>
-
+        <tomcat.version>8.5.8</tomcat.version>
+        <hibernate.version>5.2.5.Final</hibernate.version>
 
     </properties>
     <dependencies>
@@ -56,6 +57,28 @@
             </exclusions>
         </dependency>
 
+        <!--jdbc-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!--hibernate-validator-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.3.4.Final</version>
+        </dependency>
+
+
         <!--Web-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -82,8 +105,34 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+    <profiles>
+        <profile>
+            <id>postgres</id>
+            <!--db-->
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>9.4.1212.jre7</version>
+                </dependency>
+                <!--pool of coonects-->
+                <!--<dependency>-->
+                    <!--<groupId>com.zaxxer</groupId>-->
+                    <!--<artifactId>HikariCP</artifactId>-->
+                    <!--<version>2.5.1</version>-->
+                    <!--<scope>compile</scope>-->
+                <!--</dependency>-->
+
+                <dependency>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                    <version>${tomcat.version}</version>
+                </dependency>
+            </dependencies>
+
+        </profile>
+    </profiles>
     <build>
         <finalName>MudLab</finalName>
         <defaultGoal>package</defaultGoal>

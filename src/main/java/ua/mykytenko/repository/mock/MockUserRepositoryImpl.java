@@ -1,6 +1,8 @@
 package ua.mykytenko.repository.mock;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import ua.mykytenko.Profiles;
 import ua.mykytenko.entities.user.User;
 import ua.mykytenko.entities.user.UserRole;
 import ua.mykytenko.repository.UserRepository;
@@ -10,9 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/**
- * Created by Микитенко on 10.11.2016.
- */
+@Profile(Profiles.IN_MEMORY_MAP)
 @Repository
 public class MockUserRepositoryImpl implements UserRepository{
     private Map<Integer, User> users = new ConcurrentHashMap<>();

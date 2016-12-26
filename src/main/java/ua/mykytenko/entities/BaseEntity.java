@@ -1,21 +1,18 @@
 package ua.mykytenko.entities;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
-/**
- * Created by Микитенко on 19.10.2016.
- */
+@MappedSuperclass
+@Access(AccessType.PROPERTY)
 public abstract class BaseEntity {
 
     private String string;
 
     private boolean validString;
 
-    private static final String ID = "id";
+    protected static final String ID = "id";
 
     private static final String ENTITY_NAME = "entity name";
 
@@ -25,10 +22,12 @@ public abstract class BaseEntity {
        setEntityName(this.getClass().getSimpleName());
     }
 
+    @Transient
     public boolean isNew() {
         return getId() == null;
     }
 
+    @Id
     public Integer getId() {
         return integerGetter(ID);
     }
@@ -37,6 +36,7 @@ public abstract class BaseEntity {
         genericSetter(ID, id, Integer.class);
     }
 
+    @Transient
     public String getEntityName(){
         return stringGetter(ENTITY_NAME);
     }
@@ -45,6 +45,7 @@ public abstract class BaseEntity {
         genericSetter(ENTITY_NAME, name, String.class);
     }
 
+    @Transient
     public Map<String, String> getEntityMap() {
         return Collections.unmodifiableMap(entityMap);
     }
@@ -98,13 +99,41 @@ public abstract class BaseEntity {
         return this.string;
     }
 
+    protected static Map<String, String> parseLine(String line){
+        String[] lines = line.split("[\n,;.]");
+        return Arrays.stream(lines)
+                .collect(HashMap::new, (m, l) ->{
+                    String[] entry = l.split("=");
+                    String key = null, val = null;
+                    if(entry.length >= 1) {
+                        key = entry[0].trim();
+                        if (entry.length >= 2)
+                            val = entry[1].trim();
+                        m.put(key, val);
+                    }
+                }, (a,b)->{});
+    }
+
     @Override
     public int hashCode() {
-        return toString().hashCode();
+        return this.entityMap.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
-        return toString().equals(obj.toString());
+        if(!(obj instanceof BaseEntity)) return false;
+        Set<String> keys = new HashSet<>();
+                keys.addAll(this.getEntityMap().keySet());
+        final Map<String, String> otherMap = ((BaseEntity) obj).getEntityMap();
+        keys.addAll(otherMap.keySet());
+
+        return !keys.stream()
+                .map(key -> {
+                    if (this.entityMap.get(key) == null)
+                        return null == (otherMap.get(key));
+                    return this.entityMap.get(key).equals(otherMap.get(key));
+                })
+                .filter(b -> !b)
+                .findFirst().isPresent();
     }
 }

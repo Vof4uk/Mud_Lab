@@ -19,9 +19,6 @@ import java.time.LocalDate;
 
 import static ua.mykytenko.entities.samples.Description.*;
 import static ua.mykytenko.util.ServletUtil.parseInt;
-/**
- * Created by Микитенко on 20.10.2016.
- */
 @Configuration
 public class SampleServlet extends HttpServlet {
 
@@ -99,11 +96,11 @@ public class SampleServlet extends HttpServlet {
         if("saveSample".equals(action))
         {
             final Sample sample = new Sample(
-                    "polymers", req.getParameter("name"),
+                    SampleFamily.parse(req.getParameter("sampleFamily")), req.getParameter("name"),
                     Float.valueOf(req.getParameter("weight")),
                     LocalDate.parse(req.getParameter("arrived")), Applications.parse(req.getParameter("applications")),
-                    Components.parse(req.getParameter("composition")), new Vendor(req.getParameter("vendor")),
-                    new Manufacturer(req.getParameter("manufacturer")), "");
+                    Components.parse(req.getParameter("composition")), new Company(req.getParameter("vendor")),
+                    new Company(req.getParameter("manufacturer")), "");
             if (req.getParameter("id") == null) {
                 controller.save(sample, userId);
             } else {

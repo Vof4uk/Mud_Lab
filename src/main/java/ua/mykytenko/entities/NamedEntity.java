@@ -1,11 +1,12 @@
 package ua.mykytenko.entities;
 
-/**
- * Created by Микитенко on 19.10.2016.
- */
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+
+@MappedSuperclass
 public abstract class NamedEntity extends BaseEntity {
 
-    private static final String NAME = "name";
+    protected static final String NAME = "name";
 
     public NamedEntity() {
         super();
@@ -15,6 +16,7 @@ public abstract class NamedEntity extends BaseEntity {
         setName(name);
     }
 
+    @Transient
     public String getName() {
         return stringGetter(NAME);
     }

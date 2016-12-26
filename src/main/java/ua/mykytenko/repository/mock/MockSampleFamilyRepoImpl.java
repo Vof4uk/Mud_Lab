@@ -1,6 +1,8 @@
 package ua.mykytenko.repository.mock;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import ua.mykytenko.Profiles;
 import ua.mykytenko.entities.samples.SampleFamily;
 import ua.mykytenko.repository.SampleFamilyRepository;
 
@@ -11,9 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-/**
- * Created by Микитенко on 26.10.2016.
- */
+@Profile(Profiles.IN_MEMORY_MAP)
 @Repository("familyRepo")
 public class MockSampleFamilyRepoImpl implements SampleFamilyRepository {
 

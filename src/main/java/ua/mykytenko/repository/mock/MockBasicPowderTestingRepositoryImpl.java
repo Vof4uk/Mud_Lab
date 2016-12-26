@@ -1,6 +1,8 @@
 package ua.mykytenko.repository.mock;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
+import ua.mykytenko.Profiles;
 import ua.mykytenko.entities.tests.powders.BasicPowderTesting;
 import ua.mykytenko.repository.TestingRepository;
 
@@ -11,9 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-/**
- * Created by Микитенко on 28.10.2016.
- */
+@Profile(Profiles.IN_MEMORY_MAP)
 @Repository
 public class MockBasicPowderTestingRepositoryImpl implements TestingRepository<BasicPowderTesting> {
 

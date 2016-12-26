@@ -1,5 +1,6 @@
 package ua.mykytenko.serviceTest;
 
+import org.junit.Ignore;
 import ua.mykytenko.entities.tests.powders.BasicPowderTesting;
 import ua.mykytenko.service.BasicPowderTestingService;
 
@@ -7,9 +8,7 @@ import javax.annotation.PostConstruct;
 
 import static ua.mykytenko.BasicPowderTestingData.*;
 
-/**
- * Created by Микитенко on 26.11.2016.
- */
+@Ignore
 public class BasicPowderServiceTest extends AbstractTestingServiceTest{
     {
         clazz = BasicPowderTesting.class;

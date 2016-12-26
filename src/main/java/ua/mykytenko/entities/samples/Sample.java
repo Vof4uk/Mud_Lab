@@ -3,19 +3,22 @@ package ua.mykytenko.entities.samples;
 
 import ua.mykytenko.entities.NamedEntity;
 
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import static ua.mykytenko.entities.samples.Description.*;
 
-/**
- * Created by Микитенко on 19.10.2016.
- */
+@Entity
+@Table(name = "samples")
 public class Sample extends NamedEntity {
 
     private static final String FAMILY_ID = "Family ID";
 
-    private static final String FAMILY_NAME = "Family name";
+    private static final String FAMILY = "Family";
 
     private static final String WEIGHT = "Weight";
 
@@ -33,10 +36,10 @@ public class Sample extends NamedEntity {
 
     public Sample(){}
 
-    public Sample(String testingFamily, String name, float weight, LocalDate arrived, Applications applications
-            , Components components, Vendor vendor, Manufacturer manufacturer, String notes) {
+    public Sample(SampleFamily testingFamily, String name, float weight, LocalDate arrived, Applications applications
+            , Components components, Company vendor, Company manufacturer, String notes) {
         setName(name);
-        setFamilyName(testingFamily);
+        setFamily(testingFamily);
         setWeight(weight);
         setArrived(arrived);
         setApplications(applications);
@@ -54,12 +57,14 @@ public class Sample extends NamedEntity {
         genericSetter(FAMILY_ID, familyId, Integer.class);
     }
 
-    public String getFamilyName() {
-        return stringGetter(FAMILY_NAME);
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "family_id")
+    public SampleFamily getFamily() {
+        return SampleFamily.parse(stringGetter(FAMILY));
     }
 
-    public void setFamilyName(String sampleFamily) {
-        genericSetter(FAMILY_NAME, sampleFamily, String.class);
+    public void setFamily(SampleFamily sampleFamily) {
+        genericSetter(FAMILY, sampleFamily, SampleFamily.class);
     }
 
     public Float getWeight() {
@@ -78,45 +83,54 @@ public class Sample extends NamedEntity {
         genericSetter(ARRIVED, arrived, LocalDate.class);
     }
 
-    public Applications getApplications() {
+
+    @ElementCollection
+    @JoinTable(name = "sample_applications", joinColumns = @JoinColumn(name = "sample_id"))
+    @Column(name = "name")
+    public Set<String> getApplications() {
         if(Objects.isNull(entityMap.get(APPLICATIONS))) return null;
         return Applications.parse(entityMap.get(APPLICATIONS));
     }
 
-    public void setApplications(Applications applications) {
+    public void setApplications(Set<String> applications) {
         if(Objects.isNull(applications)) entityMap.put(APPLICATIONS, null);
         else
         entityMap.put(APPLICATIONS, applications.toString());
     }
 
-    public Components getComposition() {
+    @ElementCollection
+    public Map<String, Integer> getComposition() {
         if(Objects.isNull(entityMap.get(COMPOSITION))) return null;
         return Components.parse(entityMap.get(COMPOSITION));
     }
 
-    public void setComposition(Components composition) {
+    public void setComposition(Map<String, Integer> composition) {
         if(Objects.isNull(composition)) entityMap.put(COMPOSITION, null);
         else
         entityMap.put(COMPOSITION, composition.toString());
     }
 
-    public Vendor getVendor() {
-        if(Objects.isNull(entityMap.get(MANUFACTURER))) return null;
-        return new Vendor(entityMap.get(VENDOR));
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "vendor_id")
+    public Company getVendor() {
+        if(Objects.isNull(entityMap.get(VENDOR))) return null;
+        return new Company(entityMap.get(VENDOR));
     }
 
-    public void setVendor(Vendor vendor) {
+    public void setVendor(Company vendor) {
         if(Objects.isNull(vendor)) entityMap.put(VENDOR, null);
         else
         entityMap.put(VENDOR, vendor.toString());
     }
 
-    public Manufacturer getManufacturer() {
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "manufacturer_id")
+    public Company getManufacturer() {
         if(Objects.isNull(entityMap.get(MANUFACTURER))) return null;
-        return new Manufacturer(entityMap.get(MANUFACTURER));
+        return new Company(entityMap.get(MANUFACTURER));
     }
 
-    public void setManufacturer(Manufacturer manufacturer) {
+    public void setManufacturer(Company manufacturer) {
         if(Objects.isNull(manufacturer)) entityMap.put(MANUFACTURER, null);
         else
         entityMap.put(MANUFACTURER, manufacturer.toString());

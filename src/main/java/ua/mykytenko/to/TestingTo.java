@@ -4,9 +4,6 @@ import ua.mykytenko.entities.tests.AbstractTesting;
 
 import java.util.*;
 
-/**
- * Created by Микитенко on 04.11.2016.
- */
 public class TestingTo {
     private static Map<String, String> translation = new HashMap<>();
     private Map<String, String> core;
@@ -81,5 +78,12 @@ public class TestingTo {
     public boolean equals(Object obj) {
         if(! (obj instanceof TestingTo)) return false;
         return this.core.equals(((TestingTo)obj).getCore());
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        this.core.entrySet().forEach(entry -> sb.append(entry.getKey()).append("=").append(entry.getValue()).append("\n"));
+        return sb.toString();
     }
 }

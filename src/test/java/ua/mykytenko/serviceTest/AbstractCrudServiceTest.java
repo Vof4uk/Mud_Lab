@@ -1,9 +1,6 @@
 package ua.mykytenko.serviceTest;
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -37,23 +34,31 @@ public class AbstractCrudServiceTest extends AbstractTest implements Application
 
     BasicCrudService service;
 
-    BaseEntity newEntity;
+    protected BaseEntity newEntity;
+
+    protected BaseEntity compareEntity;
 
     Class clazz;
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Ignore
+    public void manageEntities(){
+        compareEntity = newEntity;
+    }
+
     @Override
     @Before
     public void beforeTest(){
         super.beforeTest();
         newEntity.setId(null);
+        manageEntities();
     }
 
     @Test
     public void testGet(){
-        assertEquals(clazz.cast(entities.get(0)), service.get(1));
+        assertEquals(clazz.cast(entities.get(0)), service.get(startSequence + 1));
     }
 
     @Test
@@ -74,16 +79,17 @@ public class AbstractCrudServiceTest extends AbstractTest implements Application
     public void testSaveNew(){
         newEntity.setId(null);
         BaseEntity e = (BaseEntity)service.saveNew(newEntity);
-        newEntity.setId(e.getId());
-        assertEquals(clazz.cast(newEntity), service.get(e.getId()));
+        compareEntity.setId(e.getId());
+        assertEquals(clazz.cast(compareEntity), service.get(e.getId()));
         service.delete(e.getId());
     }
 
     @Test
     public void testUpdate(){
-        newEntity.setId(1);
+        newEntity.setId(1 + startSequence);
+        compareEntity.setId(1 + startSequence);
         service.update(clazz.cast(newEntity));
-        assertEquals(clazz.cast(newEntity), service.get(1));
+        assertEquals(clazz.cast(compareEntity), service.get(1 + startSequence));
         service.update(entities.get(0));
     }
 

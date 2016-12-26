@@ -8,14 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Микитенко on 26.11.2016.
- */
 public class BasicMudTestingData {
     public static final TestingTo TO_1;
     public static final TestingTo TO_2;
     public static final List<TestingTo> TOS = new ArrayList<>();
     public static final TestingTo NEW_TO;
+//    public static final TestingTo COMPARE_TO;
 
     public static final BasicMudTesting TEST_1;
     public static final BasicMudTesting TEST_2;
@@ -36,8 +34,9 @@ public class BasicMudTestingData {
         TEST_1 = new BasicMudTesting(0.5f, 1.03f, 24, 10.1f, 8.9f, rheo1, gels2);
         TEST_2 = new BasicMudTesting(2f, 1.03f, 16, 15f, 7.2f, rheo2, gels1);
         NEW_TEST = new BasicMudTesting(2.1f, 1.03f, 10, 14f, 7.8f, rheo1, gels1);
-        TEST_1.setSampleId(1);
-        TEST_2.setSampleId(2);
+        TEST_1.setSampleId(200000);
+        TEST_2.setSampleId(200001);
+        NEW_TEST.setSampleId(200000);
         TEST_1.setId(1);
         TEST_2.setId(2);
         TESTS.add(TEST_1);

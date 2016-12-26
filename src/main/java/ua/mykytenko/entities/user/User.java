@@ -7,9 +7,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-/**
- * Created by Микитенко on 06.11.2016.
- */
 public class User extends NamedEntity{
 
     private Set<UserRole> roles = new HashSet<>();
@@ -30,7 +27,8 @@ public class User extends NamedEntity{
         this.roles = roles;
     }
 
-    public void addRoles(UserRole role){
+    public void addRole(UserRole role){
+        if(role == null) return;
         roles.add(role);
     }
 
